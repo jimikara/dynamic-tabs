@@ -1,0 +1,19 @@
+@import 'normalize-scss';
+@include normalize();
+
+@import 'variables';
+@import 'grid';
+@import 'typography';
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background: #eee;
+}
