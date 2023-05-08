@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import type { VNodeRef } from 'vue'
 import draggable from 'vuedraggable'
 import { useTabStore } from '@/store/tabs'
-import SearchTab from '@/components/SearchTab.vue'
 import type { Tab } from '@/types'
+import SearchTab from '@/components/SearchTab.vue'
+import Loader from '@/components/Loader.vue'
 
 const store = useTabStore()
 // const tabEl = ref<HTMLElement | null>(null)
@@ -24,6 +25,10 @@ const dragEnd = (evt: any) => {
   drag.value = false
 }
 
+const showLoader = computed(() => {
+  return store.tabs?.length < 7 && store.isLoading
+})
+
 onMounted(() => {
   store.setActiveTab(store.tabs[0]?.id)
   // focus first tab
@@ -39,7 +44,6 @@ onMounted(() => {
       :move="checkMove"
       @start="dragStart"
       @end="dragEnd"
-      @change="log"
     >
       <template #item="{ element }">
         <SearchTab
@@ -49,6 +53,9 @@ onMounted(() => {
         />
       </template>
     </draggable>
+    <div v-if="showLoader" class="tabs__loader-wrapper">
+      <Loader class="tabs__loader" />
+    </div>
   </section>
 </template>
 
@@ -59,13 +66,24 @@ onMounted(() => {
   font-size: 1.4rem;
   position: relative;
   z-index: 1001;
+  display: flex;
+  // overflow-x: scroll;
 
   &__draggable-container {
     display: inline-flex;
   }
-}
-.endbit {
-  flex: 1;
-  background: peachpuff;
+
+  &__loader-wrapper {
+    width: 160px;
+    height: 50px;
+    position: relative;
+  }
+
+  &__loader {
+    position: absolute;
+    top: 50%;
+    left: 1.2rem;
+    transform: translateY(-50%);
+  }
 }
 </style>

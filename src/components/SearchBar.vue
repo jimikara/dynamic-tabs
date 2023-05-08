@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue'
 import MagnifyIcon from 'vue-material-design-icons/Magnify.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
+import FormError from '@/components/FormError.vue'
 import { useTabStore } from '@/store/tabs'
 
 const store = useTabStore()
@@ -18,14 +19,17 @@ const search = (event: any) => {
 
 const searchTerm = ref('')
 const searchInput = ref<HTMLInputElement | null>(null)
-
-const tabLimitReached = computed(() => {
-  return store.tabs.length >= 7
-})
+const tabLimitReached = ref(false)
 
 const clearSearch = () => {
   searchTerm.value = ''
   searchInput.value?.focus()
+}
+
+const checkTabLimit = () => {
+  if (store.tabs.length >= 7) {
+    tabLimitReached.value = false
+  }
 }
 </script>
 
@@ -47,6 +51,7 @@ const clearSearch = () => {
       class="search-bar__input"
       :disabled="tabLimitReached"
       @keydown.enter="search"
+      @focus="checkTabLimit"
     />
     <CloseIcon
       v-if="searchTerm.length > 0"
@@ -56,10 +61,10 @@ const clearSearch = () => {
       @click="clearSearch"
       @keydown.enter="clearSearch"
     />
+    <FormError v-if="tabLimitReached" class="search-bar__tab-limit-error">
+      Tab limit reached
+    </FormError>
   </section>
-  <div class="form-error">
-    <p v-if="tabLimitReached">You have reached the tab limit</p>
-  </div>
 </template>
 
 <style scoped lang="scss">
@@ -113,6 +118,12 @@ const clearSearch = () => {
       top: 2.4rem;
       right: 1.2rem;
     }
+  }
+
+  &__tab-limit-error {
+    position: absolute;
+    top: 46px;
+    // background: lime;
   }
 }
 </style>

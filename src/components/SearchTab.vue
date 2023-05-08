@@ -58,14 +58,15 @@ onMounted(() => {
     @keydown.space="store.setActiveTab(props.tab.id)"
     @keydown.delete="store.removeTab(props.tab)"
   >
-    <TabHeadingLoader
+    <!-- <TabHeadingLoader
       v-if="
         store.isLoading &&
         store.activeTabId === props.tab.id &&
         !props.tab.search
       "
     />
-    <div v-else class="tab__text">{{ props.tab.search }}</div>
+    <div v-else class="tab__text">{{ props.tab.search }}</div> -->
+    <div class="tab__text">{{ props.tab.search }}</div>
     <CloseIcon
       role="button"
       class="tab__close-icon"
@@ -87,6 +88,9 @@ onMounted(() => {
   border-top: $border-dark;
   border-right: $border-dark;
   position: relative;
+  transition: all 1s ease-in-out;
+
+  @include bg-img-transition(green, 'src/assets/tab-bg.svg');
 
   &:not(:last-child) {
     border-right: none;
@@ -94,6 +98,9 @@ onMounted(() => {
 
   &:hover {
     cursor: grab;
+    background: #eee;
+
+    // background: url('src/assets/tab-bg.svg');
   }
 
   &:focus-visible,

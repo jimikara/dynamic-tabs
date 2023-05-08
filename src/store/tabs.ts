@@ -62,19 +62,13 @@ export const useTabStore = defineStore('tabs', {
       const id = uuidv4()
 
       this.setIsLoading(true)
-      this.tabs.push({ id, search: '', result: null })
 
       const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${searchTerm}`)
 
+      console.log('u ok hun?', response.ok)
+
+      this.tabs.push({ id, search: searchTerm, result: response.ok ? await response.json() : null })
       this.setActiveTab(id)
-
-      this.tabs.map(tab => {
-        if (tab.id === id) {
-          tab.search = searchTerm
-          tab.result = response.ok ? response : null
-        }
-      })
-
       this.setIsLoading(false)
     },
     setIsLoading(isLoading: boolean) {
@@ -85,6 +79,9 @@ export const useTabStore = defineStore('tabs', {
     firstTabId(state) {
       if (state.tabs.length === 0) return
       return state.tabs[0].id
+    },
+    activeTab(state) {
+      return state.tabs.find(t => t.id === state.activeTabId)
     }
   }
 })

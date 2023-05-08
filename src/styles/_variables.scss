@@ -18,6 +18,7 @@ $palette: (
   'dark': #343a40,
   'midgray': #ccc,
   'white': #fff,
+  'black': #000
 );
 
 $border-dark: 2px solid map-get($palette, 'dark');

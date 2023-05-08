@@ -29,19 +29,17 @@ const store = useTabStore()
   </header>
   <main>
     <div class="container">
-      <template v-if="store.tabs.length > 0">
-        <div class="row">
-          <div class="col-md-12">
-            <Tabs />
-          </div>
+      <div v-if="store.tabs.length > 0 || store.isLoading" class="row">
+        <div class="col-md-12">
+          <Tabs />
         </div>
-        <div class="row">
-          <div class="col-md-12">
-            <TabPanel />
-          </div>
+      </div>
+      <div v-if="store.tabs.length > 0" class="row">
+        <div class="col-md-12">
+          <TabPanel />
         </div>
-      </template>
-      <template v-else>
+      </div>
+      <template v-if="store.tabs.length <= 0 && !store.isLoading">
         <div class="row">
           <div class="col-md-12"><EmptyState /></div>
         </div>
