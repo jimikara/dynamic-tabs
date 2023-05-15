@@ -17,7 +17,6 @@ const playSound = () => {
     isPlaying.value = true
     audio.value.play()
     audio.value.addEventListener('ended', () => {
-      console.log('ended')
       isPlaying.value = false
     })
   }
@@ -55,11 +54,6 @@ const playSound = () => {
   &__icon {
     position: relative;
     top: 0.1rem;
-
-    // &--playing {
-    //   animation: pulse 1s infinite;
-    //   transform: scale(1.2);
-    // }
   }
 }
 </style>

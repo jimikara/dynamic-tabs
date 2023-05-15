@@ -4,7 +4,6 @@
 @import 'variables';
 @import 'grid';
 @import 'typography';
-@import 'mixins';
 
 * {
   box-sizing: border-box;
@@ -16,5 +15,7 @@ html {
 }
 
 body {
-  background: #eee;
+  background: map-get($palette, 'light');
+  color: map-get($palette, 'black');
+  position: relative;
 }

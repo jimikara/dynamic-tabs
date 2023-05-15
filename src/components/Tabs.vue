@@ -7,38 +7,36 @@ import type { Tab } from '@/types'
 import SearchTab from '@/components/SearchTab.vue'
 import Loader from '@/components/Loader.vue'
 
-const store = useTabStore()
-// const tabEl = ref<HTMLElement | null>(null)
+const tabStore = useTabStore()
 const drag = ref(false)
-const tabBeingDragged = ref<Tab | null>(null) // Todo get event
+const tabBeingDragged = ref<string | null>(null)
 
-const checkMove = (evt: any, originalEvent: any) => {
+const checkMove = (evt: any) => {
   tabBeingDragged.value = evt.draggedContext.element.id
-  store.setActiveTab(evt.draggedContext.element.id)
+  tabStore.setActiveTab(evt.draggedContext.element.id)
 }
 
-const dragStart = (evt: any) => {
+const dragStart = () => {
   drag.value = true
 }
 
-const dragEnd = (evt: any) => {
+const dragEnd = () => {
   drag.value = false
 }
 
 const showLoader = computed(() => {
-  return store.tabs?.length < 7 && store.isLoading
+  return tabStore.tabs?.length < 7 && tabStore.isLoading
 })
 
 onMounted(() => {
-  store.setActiveTab(store.tabs[0]?.id)
-  // focus first tab
+  tabStore.setActiveTab(tabStore.tabs[0]?.id)
 })
 </script>
 
 <template>
   <section class="tabs">
     <draggable
-      v-model="store.tabs"
+      v-model="tabStore.tabs"
       item-key="id"
       class="tabs__draggable-container"
       :move="checkMove"
@@ -67,7 +65,10 @@ onMounted(() => {
   position: relative;
   z-index: 1001;
   display: flex;
-  // overflow-x: scroll;
+
+  @media screen and (max-width: 1060px) {
+    overflow-x: auto;
+  }
 
   &__draggable-container {
     display: inline-flex;

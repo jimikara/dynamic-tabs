@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useTabStore } from '@/store/tabs'
-import Loader from '@/components/Loader.vue'
 import PlaySoundButton from './PlaySoundButton.vue'
 
 const store = useTabStore()
@@ -8,21 +7,21 @@ const store = useTabStore()
 
 <template>
   <div class="tab-panel">
-    <template v-if="Boolean(store.activeTab.result)">
+    <template v-if="Boolean(store.activeTab?.result)">
       <div
-        v-for="(item, index) in store.activeTab.result"
+        v-for="(item, index) in store.activeTab?.result"
         class="tab-panel__result"
         :class="{
           'tab-panel__result--multiple':
-            store.activeTab.result.length > 1 &&
-            index !== store.activeTab.result.length - 1
+            store.activeTab?.result.length > 1 &&
+            index !== store.activeTab?.result.length - 1
         }"
       >
         <section class="tab-panel__main-heading-container">
           <h2 class="tab-panel__main-heading">
             {{ item.word }}
             <sup
-              v-if="store.activeTab.result.length > 1"
+              v-if="store.activeTab?.result.length > 1"
               class="tab-panel__index"
               >{{ index + 1 }}</sup
             >
@@ -30,14 +29,12 @@ const store = useTabStore()
           <p class="tab-panel__phonetic">
             {{ item.phonetic }}
           </p>
-          <!-- <audio :src="item.phonetics[0].audio">PP</audio> -->
           <PlaySoundButton
-            :audio-src="item.phonetics[0].audio"
+            :audio-src="item.phonetics?.[0]?.audio"
             class="tab-panel__play-sound-button"
           />
         </section>
         <section class="tab-panel__meanings">
-          <!-- loop over meanings -->
           <div v-for="meaning in item.meanings" class="tab-panel__meaning">
             <p class="tab-panel__part-of-speech">{{ meaning.partOfSpeech }}</p>
             <ol>
@@ -64,9 +61,8 @@ const store = useTabStore()
 .tab-panel {
   min-height: calc(100vh - 284px);
   padding: 4.8rem;
-  border-left: $border-dark;
-  border-right: $border-dark;
-  border-top: $border-dark;
+  margin-bottom: 4.8rem;
+  border: $border-dark;
   background: #fff;
   position: relative;
   font-family: 'Lora', serif;
@@ -94,7 +90,6 @@ const store = useTabStore()
   }
 
   &__main-heading {
-    // display: inline-block;
     font-size: 3.2rem;
     margin: 0;
     text-transform: capitalize;
@@ -103,15 +98,13 @@ const store = useTabStore()
   &__index {
     font-size: 40%;
     top: -2rem;
-    // color: map-get($palette, 'midgray');
   }
 
   &__phonetic {
-    // display: inline-block;
     font-size: 2.4rem;
     margin: 0;
     margin-left: 1.2rem;
-    color: #555; // Todo: use palette
+    color: map-get($palette, 'dark');
   }
 
   &__play-sound-button {
@@ -123,7 +116,6 @@ const store = useTabStore()
   &__part-of-speech {
     font-size: 2rem;
     font-weight: 500;
-    // font-style: italic;
     margin-bottom: 2.4rem;
   }
 

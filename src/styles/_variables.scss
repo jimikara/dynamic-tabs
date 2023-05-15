@@ -1,11 +1,14 @@
-$breakpoints : (
-  'xs': 0,
-  'sm': 576px,
-  'md': 768px,
-  'lg': 992px,
-  'xl': 1200px,
-  'xxl': 1400px
-);
+$grid-columns: 12 !default;
+$grid-gutter: 16px !default;
+$grid-container-max-width: 1200px !default;
+$grid-container-gutter: 12px !default;
+
+$grid-breakpoints: (
+  sm: 600px,
+  md: 900px,
+  lg: 1200px,
+  xl: 1800px
+) !default;
 
 $palette: (
   'primary': #ff4500,
@@ -14,11 +17,12 @@ $palette: (
   'info': #17a2b8,
   'warning': #ffc107,
   'danger': #dc3545,
-  'light': #f8f9fa,
-  'dark': #343a40,
+  'light': #e2e2e2,
+  'dark': #555,
   'midgray': #ccc,
   'white': #fff,
-  'black': #000
+  'black': #1f1f1f
 );
 
-$border-dark: 2px solid map-get($palette, 'dark');
+$border-dark: 2px solid map-get($palette, 'black');
+$tab-width: 16rem;

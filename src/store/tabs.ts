@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export type RootState = {
   tabs: Tab[];
+  visibleTabs: Tab[];
   activeTabId: string;
   isLoading: boolean;
 };
@@ -11,6 +12,7 @@ export type RootState = {
 export const useTabStore = defineStore('tabs', { 
   state: () => ({ 
     tabs: [],
+    visibleTabs: [],
     activeTabId: '1',
     isLoading: false
   } as RootState),
@@ -64,8 +66,6 @@ export const useTabStore = defineStore('tabs', {
       this.setIsLoading(true)
 
       const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${searchTerm}`)
-
-      console.log('u ok hun?', response.ok)
 
       this.tabs.push({ id, search: searchTerm, result: response.ok ? await response.json() : null })
       this.setActiveTab(id)

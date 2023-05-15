@@ -8,19 +8,6 @@
 @use 'sass:math';
 
 @mixin tiny-grid {
-  // Settings
-  $grid-columns: 12 !default;
-  $grid-gutter: 20px !default;
-  $grid-container-max-width: 1200px !default;
-  $grid-container-gutter: 40px !default;
-
-  $grid-breakpoints: (
-    sm: 600px,
-    md: 900px,
-    lg: 1200px,
-    xl: 1800px
-  ) !default;
-
   // Container Elements
   %container-base {
     margin-left: auto;
@@ -33,7 +20,15 @@
 
   .container {
     @extend %container-base;
-    max-width: $grid-container-max-width;
+    
+
+    @media (min-width: 1060px) {
+      width: 1060px;
+    }
+
+    @media (min-width: $grid-container-max-width) {
+      width: $grid-container-max-width;
+    }
   }
 
   .container-fluid {

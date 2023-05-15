@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import MagnifyIcon from 'vue-material-design-icons/Magnify.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import FormError from '@/components/FormError.vue'
@@ -7,14 +7,12 @@ import { useTabStore } from '@/store/tabs'
 
 const store = useTabStore()
 
-const search = (event: any) => {
-  if (!event.target.value || event.target.value?.length === 0) {
+const search = () => {
+  if (!searchTerm.value || searchTerm.value?.length === 0) {
     return
   }
 
-  store.fetchSearchResults(event.target.value).catch((error: any) => {
-    console.log('ERRR', error)
-  })
+  store.fetchSearchResults(searchTerm.value)
 }
 
 const searchTerm = ref('')
@@ -35,12 +33,12 @@ const checkTabLimit = () => {
 
 <template>
   <section class="search-bar">
-    <button class="search-bar__search-button">
+    <button class="search-bar__search-button" @click="search">
       <MagnifyIcon
         role="button"
         tabindex="0"
+        fillColor="#fff"
         class="search-bar__search-button-icon"
-        @click="search"
       />
     </button>
     <input
@@ -79,11 +77,10 @@ const checkTabLimit = () => {
     font-size: 1.6rem;
     padding: 1.2rem;
     padding-left: 5.8rem;
-    border: 2px solid map-get($palette, 'midgray');
+    border: 2px solid map-get($palette, 'black');
 
     &:focus {
       outline: none;
-      // border: 2px solid orange;
     }
   }
 
@@ -92,19 +89,23 @@ const checkTabLimit = () => {
     top: 0;
     width: 46px;
     height: 46px;
-    background: map-get($palette, 'midgray');
-    border: 0;
+    background: map-get($palette, 'black');
+    border: $border-dark;
     padding: 0;
     cursor: pointer;
 
-    &-icon {
-      width: 24px;
-      height: 24px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+    &:hover {
+      background: map-get($palette, 'primary');
     }
+  }
+
+  &__search-button-icon {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
   &__icon {
@@ -123,7 +124,6 @@ const checkTabLimit = () => {
   &__tab-limit-error {
     position: absolute;
     top: 46px;
-    // background: lime;
   }
 }
 </style>

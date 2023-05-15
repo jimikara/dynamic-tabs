@@ -2,10 +2,12 @@
   "extends": "@vue/tsconfig/tsconfig.json",
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
   "compilerOptions": {
+    "module": "esnext",
+    "moduleResolution": "node",
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
-      "src/*": ["./src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "references": [
