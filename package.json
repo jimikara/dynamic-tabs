@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
+    "@types/sortablejs": "^1.15.1",
     "normalize-scss": "^7.0.1",
     "pinia": "^2.0.35",
     "sass": "^1.62.1",

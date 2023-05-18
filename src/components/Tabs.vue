@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import type { VNodeRef } from 'vue'
 import draggable from 'vuedraggable'
+import type { MoveEvent } from 'vuedraggable'
 import { useTabStore } from '@/store/tabs'
-import type { Tab } from '@/types'
 import SearchTab from '@/components/SearchTab.vue'
 import Loader from '@/components/Loader.vue'
+import type { Tab } from 'tabs'
 
 const tabStore = useTabStore()
 const drag = ref(false)
 const tabBeingDragged = ref<string | null>(null)
 
-const checkMove = (evt: any) => {
+const checkMove = (evt: MoveEvent<Tab>) => {
   tabBeingDragged.value = evt.draggedContext.element.id
   tabStore.setActiveTab(evt.draggedContext.element.id)
 }

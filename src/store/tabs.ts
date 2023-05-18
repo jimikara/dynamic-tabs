@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import type { Tab } from 'src/types'
+import type { Tab } from 'tabs'
 import { v4 as uuidv4 } from 'uuid';
 
 export type RootState = {
