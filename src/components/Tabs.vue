@@ -1,17 +1,26 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import draggable from 'vuedraggable'
-import type { MoveEvent } from 'vuedraggable'
+import type { MoveEvent } from 'sortablejs'
 import { useTabStore } from '@/store/tabs'
 import SearchTab from '@/components/SearchTab.vue'
 import Loader from '@/components/Loader.vue'
 import type { Tab } from 'tabs'
 
+// Todo: move this to types file
+export interface DraggedContext<T> {
+  index: number
+  futureIndex: number
+  element: T
+}
+
+type DraggableMoveEvent = MoveEvent & { draggedContext: DraggedContext<Tab> }
+
 const tabStore = useTabStore()
 const drag = ref(false)
 const tabBeingDragged = ref<string | null>(null)
 
-const checkMove = (evt: MoveEvent<Tab>) => {
+const checkMove = (evt: DraggableMoveEvent) => {
   tabBeingDragged.value = evt.draggedContext.element.id
   tabStore.setActiveTab(evt.draggedContext.element.id)
 }

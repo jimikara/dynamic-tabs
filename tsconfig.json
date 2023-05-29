@@ -4,6 +4,7 @@
   "compilerOptions": {
     "module": "esnext",
     "moduleResolution": "node",
+    "noImplicitAny": false,
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
@@ -14,9 +15,9 @@
       "./src/types"
     ]
   },
-  "references": [
-    {
-      "path": "./tsconfig.config.json"
-    }
-  ]
+  // "references": [
+  //   {
+  //     "path": "./tsconfig.config.json"
+  //   }
+  // ]
 }

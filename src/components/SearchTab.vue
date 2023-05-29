@@ -3,7 +3,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 import type { VNodeRef } from 'vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import DragVerticalIcon from 'vue-material-design-icons/DragVertical.vue'
-import type { Tab } from '@/types'
+import type { Tab } from 'tabs'
 import { useTabStore } from '@/store/tabs'
 
 const store = useTabStore()
