@@ -50,9 +50,7 @@ const store = useTabStore()
       </div>
     </template>
     <div v-else>
-      <p class="tab-panel__empty-state">
-        Sorry, no definitions found for the word you were looking for
-      </p>
+      <p class="tab-panel__empty-state">Sorry, no definitions found</p>
     </div>
   </div>
 </template>

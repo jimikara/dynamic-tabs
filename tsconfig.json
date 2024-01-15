@@ -14,10 +14,5 @@
       "./node_modules/@types",
       "./src/types"
     ]
-  },
-  // "references": [
-  //   {
-  //     "path": "./tsconfig.config.json"
-  //   }
-  // ]
+  }
 }

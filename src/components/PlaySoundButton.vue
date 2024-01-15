@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import VolumeHighIcon from 'vue-material-design-icons/VolumeHigh.vue'
 
 type PropTypes = {
-  audioSrc: 'string'
+  audioSrc: string
 }
 
 const props = defineProps<PropTypes>()

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import MagnifyIcon from 'vue-material-design-icons/Magnify.vue'
 import CloseIcon from 'vue-material-design-icons/Close.vue'
 import FormError from '@/components/FormError.vue'
@@ -13,52 +13,55 @@ const search = () => {
   }
 
   store.fetchSearchResults(searchTerm.value)
+
+  searchTerm.value = ''
 }
 
 const searchTerm = ref('')
 const searchInput = ref<HTMLInputElement | null>(null)
-const tabLimitReached = ref(false)
 
 const clearSearch = () => {
   searchTerm.value = ''
   searchInput.value?.focus()
 }
 
-const checkTabLimit = () => {
-  if (store.tabs.length >= 7) {
-    tabLimitReached.value = false
-  }
-}
+const tabLimitReached = computed(() => {
+  return store.tabs.length >= 7
+})
 </script>
 
 <template>
   <section class="search-bar">
-    <button class="search-bar__search-button" @click="search">
-      <MagnifyIcon
+    <div :class="{ 'search-bar__input-wrapper--disabled': tabLimitReached }">
+      <button
+        class="search-bar__search-button"
+        aria-label="search"
+        @click="search"
+      >
+        <MagnifyIcon
+          tabindex="0"
+          fillColor="#fff"
+          class="search-bar__search-button-icon"
+        />
+      </button>
+      <input
+        ref="searchInput"
+        v-model="searchTerm"
+        type="text"
+        placeholder="Search dictionary"
+        class="search-bar__input"
+        :disabled="tabLimitReached"
+        @keydown.enter="search"
+      />
+      <CloseIcon
+        v-if="searchTerm.length > 0"
         role="button"
         tabindex="0"
-        fillColor="#fff"
-        class="search-bar__search-button-icon"
+        class="search-bar__icon search-bar__icon--close"
+        @click="clearSearch"
+        @keydown.enter="clearSearch"
       />
-    </button>
-    <input
-      ref="searchInput"
-      v-model="searchTerm"
-      type="text"
-      placeholder="search"
-      class="search-bar__input"
-      :disabled="tabLimitReached"
-      @keydown.enter="search"
-      @focus="checkTabLimit"
-    />
-    <CloseIcon
-      v-if="searchTerm.length > 0"
-      role="button"
-      tabindex="0"
-      class="search-bar__icon search-bar__icon--close"
-      @click="clearSearch"
-      @keydown.enter="clearSearch"
-    />
+    </div>
     <FormError v-if="tabLimitReached" class="search-bar__tab-limit-error">
       Tab limit reached
     </FormError>
@@ -81,6 +84,13 @@ const checkTabLimit = () => {
 
     &:focus {
       outline: none;
+    }
+  }
+
+  &__input-wrapper {
+    &--disabled {
+      opacity: 0.5;
+      pointer-events: none;
     }
   }
 

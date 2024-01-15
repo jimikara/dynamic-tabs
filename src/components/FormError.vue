@@ -13,7 +13,7 @@ import BlockIcon from 'vue-material-design-icons/BlockHelper.vue'
 .form-error {
   display: flex;
   position: relative;
-  color: map-get($palette, 'danger');
+  color: map-get($palette, 'dark');
   font-size: 1.2rem;
   align-items: center;
   padding: 1.2rem 0;
