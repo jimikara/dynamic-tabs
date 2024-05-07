@@ -22,7 +22,7 @@ The project has been built following the [ARIA Authoring Practices Guide recomme
 
 `npm run dev`
 
-### Productions
+### Production
 
 `npm install`
 
